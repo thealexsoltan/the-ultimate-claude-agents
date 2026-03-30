@@ -1,0 +1,5 @@
+output/
+scripts/
+.DS_Store
+.env
+*.log
