@@ -41,6 +41,56 @@ mkdir -p "$INSTALL_DIR/output"
 mkdir -p "$INSTALL_DIR/scripts"
 echo -e "${GREEN}[ok]${NC} Created output/ and scripts/ directories"
 
+# Register all slash commands in .claude/skills/
+SKILLS_DIR="$PROJECT_ROOT/.claude/skills"
+
+declare -A SKILL_STUBS
+SKILL_STUBS=(
+  ["build-product"]="Build a complete digital product in Notion — orchestrates 10 phases from idea to polished delivery.|argument-hint: [project-name]|Read and follow the full instructions in \`rewyse-ai/build-product/SKILL.md\`.\n\nBefore starting, also read:\n- \`rewyse-ai/build-product/reference.md\`\n- \`rewyse-ai/shared/notion-api-reference.md\`\n- \`rewyse-ai/shared/product-types-reference.md\`"
+  ["product-idea"]="Define a product idea — type, niche, ICP, variables, and delivery mode for a digital product.||Read and follow the full instructions in \`rewyse-ai/product-idea/SKILL.md\`."
+  ["build-database"]="Create a Notion database with properties, views, status workflow, and sample entries.||Read and follow the full instructions in \`rewyse-ai/build-database/SKILL.md\`.\n\nAlso read \`rewyse-ai/shared/notion-api-reference.md\` for API patterns."
+  ["expert-profile"]="Build a domain expert persona — voice, tone, vocabulary, and perspective for content generation.||Read and follow the full instructions in \`rewyse-ai/expert-profile/SKILL.md\`."
+  ["content-blueprint"]="Define the page structure — sections, word counts, formatting rules, and variable dependencies.||Read and follow the full instructions in \`rewyse-ai/content-blueprint/SKILL.md\`."
+  ["write-prompt"]="Assemble expert profile + content blueprint into an optimized generation prompt.||Read and follow the full instructions in \`rewyse-ai/write-prompt/SKILL.md\`."
+  ["test-content"]="Generate 2-3 sample pages for review — the quality gate before full production.||Read and follow the full instructions in \`rewyse-ai/test-content/SKILL.md\`."
+  ["generate-content"]="Batch-generate all content using parallel agents and publish to Notion.||Read and follow the full instructions in \`rewyse-ai/generate-content/SKILL.md\`.\n\nAlso read \`rewyse-ai/shared/notion-api-reference.md\` for API patterns."
+  ["design-product"]="Create a polished homepage with browse sections, filtered views, icons, and shareable link.||Read and follow the full instructions in \`rewyse-ai/design-product/SKILL.md\`.\n\nAlso read:\n- \`rewyse-ai/design-product/reference.md\`\n- \`rewyse-ai/shared/notion-api-reference.md\`"
+  ["product-qa"]="Scan all published pages for quality issues — repetition, missing sections, tone drift.||Read and follow the full instructions in \`rewyse-ai/product-qa/SKILL.md\`."
+  ["product-expand"]="Suggest 3-5 complementary products to build next for the same audience.||Read and follow the full instructions in \`rewyse-ai/product-expand/SKILL.md\`."
+  ["home-page"]="Create or edit Notion home pages with structured navigation and 2-column layouts.||Read and follow the full instructions in \`rewyse-ai/home-page/SKILL.md\`.\n\nAlso read \`rewyse-ai/home-page/reference.md\`."
+  ["subpage-views"]="Configure linked database views on subpages — create filtered views, delete old views, hide titles.||Read and follow the full instructions in \`rewyse-ai/subpage-views/SKILL.md\`.\n\nAlso read \`rewyse-ai/subpage-views/reference.md\`."
+  ["prompt-generator"]="Generate ready-to-paste Notion database creation prompts for digital product ideas.||Read and follow the full instructions in \`rewyse-ai/prompt-generator/SKILL.md\`."
+  ["rewyse-help"]="Ask questions about the Rewyse AI pipeline, troubleshoot errors, or check project status.|argument-hint: [question]|Read and follow the full instructions in \`rewyse-ai/rewyse-help/SKILL.md\`.\n\nAlso read \`rewyse-ai/rewyse-help/reference.md\` for FAQ, error catalog, and phase summaries."
+  ["rewyse-onboard"]="First-time setup guide — Node.js, Notion integration, NOTION_TOKEN, and pipeline walkthrough.||Read and follow the full instructions in \`rewyse-ai/rewyse-onboard/SKILL.md\`.\n\nAlso read \`rewyse-ai/rewyse-onboard/reference.md\` for setup guides and troubleshooting."
+)
+
+for skill_name in "${!SKILL_STUBS[@]}"; do
+  skill_dir="$SKILLS_DIR/$skill_name"
+  skill_file="$skill_dir/SKILL.md"
+
+  if [ -f "$skill_file" ]; then
+    continue
+  fi
+
+  mkdir -p "$skill_dir"
+
+  IFS='|' read -r desc arg_hint body <<< "${SKILL_STUBS[$skill_name]}"
+
+  {
+    echo "---"
+    echo "name: $skill_name"
+    echo "description: $desc"
+    if [ -n "$arg_hint" ]; then
+      echo "$arg_hint"
+    fi
+    echo "---"
+    echo ""
+    echo -e "$body"
+  } > "$skill_file"
+done
+
+echo -e "${GREEN}[ok]${NC} Registered 16 slash commands in .claude/skills/"
+
 # Add Rewyse AI registration to root CLAUDE.md if not already present
 CLAUDE_MD="$PROJECT_ROOT/CLAUDE.md"
 if [ -f "$CLAUDE_MD" ]; then
