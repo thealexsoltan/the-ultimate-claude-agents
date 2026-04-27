@@ -39,6 +39,32 @@ Replace `YOUR_ACCESS_TOKEN` with the access token you received.
 
 ---
 
+## Staying Up To Date
+
+When a new version ships, run this to update:
+
+```bash
+cd rewyse-ai && bash update.sh
+```
+
+That's the whole update flow. The script:
+
+- Saves any local edits you've made (stashed automatically)
+- Pulls the latest version from GitHub
+- Registers any new slash commands
+- Restores your local edits
+- Prints a summary of what's new
+
+Your products in `output/` and your existing slash commands are never touched.
+
+You can also paste this into Claude Code chat and it'll do it for you:
+
+```
+Update Rewyse AI to the latest version.
+```
+
+---
+
 ## Prerequisites
 
 | Requirement | Why |
