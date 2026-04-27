@@ -92,8 +92,8 @@ fi
 echo -e "${BLUE}[..]${NC} Registering any new slash commands..."
 INSTALL_LOG="/tmp/rewyse-update-install-$$.log"
 if bash install.sh > "$INSTALL_LOG" 2>&1; then
-  # Extract the slash-commands line from install.sh output for the summary
-  SKILL_LINE=$(grep -E "Registered|already registered" "$INSTALL_LOG" | tail -1 | sed -E 's/.*\[ok\][^A-Za-z0-9]+//')
+  # Extract the slash-commands line from install.sh output (strip ANSI escapes)
+  SKILL_LINE=$(grep -oE "(Registered|already registered)[A-Za-z0-9 ./-]+" "$INSTALL_LOG" | tail -1)
   echo -e "${GREEN}[ok]${NC} ${SKILL_LINE:-Slash commands registered}"
   rm -f "$INSTALL_LOG"
 else
