@@ -18,6 +18,7 @@ to run the full pipeline.
 | 5 | write-prompt | Combines profile + blueprint into generation prompt |
 | 6 | test-content | Generates 2-3 sample pages for review |
 | 7 | generate-content | Batch processes all entries with parallel agents |
+| 7.5 | generate-images | *(Optional)* Generates AI images for entries/homepage and uploads to Notion |
 | 8 | design-product | Creates homepage, navigation, icons |
 | 9 | product-qa | Scans for quality issues, flags for regen |
 | 10 | product-expand | Suggests complementary products |
@@ -87,6 +88,18 @@ production. Traces quality issues to upstream artifacts.
 "fill database", "publish draft entries"
 **Description:** Batch processes all Draft entries using parallel subagents, writes
 content to Notion pages via API, and marks entries as Published.
+
+### generate-images
+**Slash command:** `/generate-images`
+**Triggers:** "generate images for the product", "add cover art to entries", "illustrate
+entries with AI", "create images for the homepage", "batch image generation",
+"AI images for Notion pages"
+**Description:** *(Optional Phase 7.5)* Generates AI images for the product using OpenAI
+(`gpt-image-2`) or kie.ai (`gpt-image-2-text-to-image`). Three modes: cover-only (one
+image per entry as page cover), multi-section (cover + N inline images placed after
+target section headings — magazine layout for recipes, tutorials, case studies), or
+style-batch (N images sharing a style, for the homepage). Cost-transparent — always shows
+estimated spend with explicit hard-gate approval before any API call.
 
 ### design-product
 **Slash command:** `/design-product`

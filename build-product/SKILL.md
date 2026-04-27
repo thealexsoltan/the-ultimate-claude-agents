@@ -50,6 +50,7 @@ Create the state directory and initialize `state.json`:
     "5_write_prompt": { "status": "pending" },
     "6_test_content": { "status": "pending" },
     "7_generate_content": { "status": "pending" },
+    "7_5_generate_images": { "status": "pending" },
     "8_design_product": { "status": "pending" },
     "9_product_qa": { "status": "pending" },
     "10_product_expand": { "status": "pending" }
@@ -184,6 +185,40 @@ Writes content to Notion pages, populates rich_text database properties from gen
 content, and updates Status to Published.
 
 Reports progress between batches. Supports resume if interrupted.
+
+### Phase 7.5: Generate Images *(Optional)*
+**Sub-skill:** Read and follow `rewyse-ai/generate-images/SKILL.md`
+**Reads:** `product-idea.md`, `database-config.json`, `expert-profile.md`, `content-blueprint.md`
+**Writes:** `image-config.json`, `output/{slug}/images/`
+
+Optional phase — ask the user before invoking. Generates AI images for the product using
+either OpenAI (`gpt-image-1`) or kie.ai (`google/nano-banana`). Two modes auto-detected:
+
+- **Cover only** — one image per Published database entry, attached as page cover (good for
+  reference cards, prompt packs, daily training entries)
+- **Multi-section** — cover + N inline images per entry, each placed after a target section
+  heading (magazine layout — recipes with Ingredients flat-lay + Final Result; tutorials
+  with Setup + Process + Result; case studies with Before + After)
+- **Style-batch** — N images sharing a single style, used by Phase 8 for the homepage and
+  section icons (good for mental models, frameworks, glossaries)
+
+Always shows the cost estimate before generating. Sample-approval gate before batching the
+rest.
+
+**Prompt format at this phase:**
+> ## Phase 7.5 (Optional): Generate Images
+>
+> Want to add AI-generated images to your product? This is optional — costs apply
+> (~\$0.04 per image with OpenAI gpt-image-2, ~\$0.03 with kie.ai). The agent will ask
+> you which mode (cover-only vs multi-section magazine layout) and which sections to
+> image, then show a hard cost gate before any API call.
+>
+> - **Yes, with OpenAI** *(default, higher quality)*
+> - **Yes, with kie.ai** *(cheaper, ~30% off)*
+> - **Skip** — proceed straight to Phase 8
+
+If user picks "Skip", set phase status to `"skipped"` and advance. If they pick a provider,
+invoke `generate-images` and wait for it to finish before continuing to Phase 8.
 
 ### Phase 8: Design Product
 **Sub-skill:** Read and follow `rewyse-ai/design-product/SKILL.md`

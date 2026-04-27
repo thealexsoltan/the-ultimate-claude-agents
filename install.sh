@@ -112,6 +112,11 @@ create_skill "generate-content" \
   "" \
   "Read and follow the full instructions in \`rewyse-ai/generate-content/SKILL.md\`.\n\nAlso read \`rewyse-ai/shared/notion-api-reference.md\` for API patterns."
 
+create_skill "generate-images" \
+  "Generate AI images for product entries or homepage via OpenAI or kie.ai. Three modes: cover-only, multi-section (cover + section images per entry), style-batch. Optional Phase 7.5." \
+  "" \
+  "Read and follow the full instructions in \`rewyse-ai/generate-images/SKILL.md\`.\n\nAlso read:\n- \`rewyse-ai/generate-images/reference.md\`\n- \`rewyse-ai/shared/notion-api-reference.md\`"
+
 create_skill "design-product" \
   "Create a polished homepage with browse sections, filtered views, icons, and shareable link." \
   "" \
@@ -155,7 +160,7 @@ create_skill "rewyse-onboard" \
 if [ "$SKILL_COUNT" -gt 0 ]; then
   echo -e "${GREEN}[ok]${NC} Registered $SKILL_COUNT new slash commands in .claude/skills/"
 else
-  echo -e "${GREEN}[ok]${NC} All 16 slash commands already registered in .claude/skills/"
+  echo -e "${GREEN}[ok]${NC} All 17 slash commands already registered in .claude/skills/"
 fi
 
 # Add Rewyse AI registration to root CLAUDE.md if not already present
@@ -178,9 +183,9 @@ See `rewyse-ai/CLAUDE.md` for full pipeline documentation.
 - `/rewyse-help` — Q&A and troubleshooting
 
 **All commands:** `/build-product`, `/product-idea`, `/build-database`, `/expert-profile`,
-`/content-blueprint`, `/write-prompt`, `/test-content`, `/generate-content`, `/design-product`,
-`/product-qa`, `/product-expand`, `/home-page`, `/subpage-views`, `/prompt-generator`,
-`/rewyse-help`, `/rewyse-onboard`
+`/content-blueprint`, `/write-prompt`, `/test-content`, `/generate-content`,
+`/generate-images`, `/design-product`, `/product-qa`, `/product-expand`, `/home-page`,
+`/subpage-views`, `/prompt-generator`, `/rewyse-help`, `/rewyse-onboard`
 REGISTRATION
     echo -e "${GREEN}[ok]${NC} Added Rewyse AI registration to CLAUDE.md"
   fi
@@ -198,9 +203,9 @@ See `rewyse-ai/CLAUDE.md` for full pipeline documentation.
 - `/rewyse-help` — Q&A and troubleshooting
 
 **All commands:** `/build-product`, `/product-idea`, `/build-database`, `/expert-profile`,
-`/content-blueprint`, `/write-prompt`, `/test-content`, `/generate-content`, `/design-product`,
-`/product-qa`, `/product-expand`, `/home-page`, `/subpage-views`, `/prompt-generator`,
-`/rewyse-help`, `/rewyse-onboard`
+`/content-blueprint`, `/write-prompt`, `/test-content`, `/generate-content`,
+`/generate-images`, `/design-product`, `/product-qa`, `/product-expand`, `/home-page`,
+`/subpage-views`, `/prompt-generator`, `/rewyse-help`, `/rewyse-onboard`
 NEWCLAUDE
   echo -e "${GREEN}[ok]${NC} Created CLAUDE.md with Rewyse AI registration"
 fi

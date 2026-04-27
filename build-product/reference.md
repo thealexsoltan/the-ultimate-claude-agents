@@ -36,6 +36,9 @@ The `state.json` file tracks the entire project lifecycle. It lives at
     "7_generate_content": {
       "status": "pending"
     },
+    "7_5_generate_images": {
+      "status": "pending"
+    },
     "8_design_product": {
       "status": "pending"
     },
@@ -63,7 +66,7 @@ The `state.json` file tracks the entire project lifecycle. It lives at
 | `in_progress` | Currently being worked on |
 | `approved` | User approved the output |
 | `needs_revision` | User requested changes |
-| `skipped` | User chose to skip (only for Phase 10) |
+| `skipped` | User chose to skip (Phase 7.5 and Phase 10) |
 
 ---
 
@@ -85,8 +88,11 @@ Phase 5 (write-prompt) ──> Phase 6 (test-content)
 Phase 2 (build-database) ──> Phase 6 (test-content)
 Phase 6 (test-content) ──> Phase 7 (generate-content)
 
+Phase 7 (generate-content) ──> Phase 7.5 (generate-images)  [optional]
 Phase 7 (generate-content) ──> Phase 8 (design-product)
 Phase 7 (generate-content) ──> Phase 9 (product-qa)
+
+Phase 7.5 (generate-images) ──> Phase 8 (design-product)  [feeds image refs into homepage]
 
 Phase 9 (product-qa) ──> Phase 10 (product-expand)
 ```
@@ -103,8 +109,9 @@ to `pending`. Use this lookup:
 | Phase 3 (expert-profile) | 5, 6, 7, 8, 9, 10 |
 | Phase 4 (content-blueprint) | 5, 6, 7, 8, 9, 10 |
 | Phase 5 (write-prompt) | 6, 7, 8, 9, 10 |
-| Phase 6 (test-content) | 7, 8, 9, 10 |
-| Phase 7 (generate-content) | 8, 9, 10 |
+| Phase 6 (test-content) | 7, 7.5, 8, 9, 10 |
+| Phase 7 (generate-content) | 7.5, 8, 9, 10 |
+| Phase 7.5 (generate-images) | (none — independent; can re-run anytime) |
 | Phase 8 (design-product) | (none — independent) |
 | Phase 9 (product-qa) | 10 |
 
@@ -128,6 +135,7 @@ profile or blueprint changes.
 | 5 | `generation-prompt.md` | Complete parameterized generation prompt |
 | 6 | `test-results.md` | Test entries, samples, feedback, approved versions |
 | 7 | `content-log.json` | Per-entry generation status, batch progress |
+| 7.5 | `image-config.json` *(optional)* | Provider, mode, per-image log, file_upload IDs, cost |
 | 8 | `design-config.json` | Homepage ID, shareable link, browse sections |
 | 9 | `qa-report.md` | Quality scan results, flagged pages, fixes applied |
 | 10 | `expansion-brief.md` | Complementary product suggestions with briefs |
