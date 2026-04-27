@@ -101,7 +101,7 @@ Rewyse AI runs 10 sequential phases, each handled by a specialized AI agent:
 | 5. **Write Prompt** | Combine expert + blueprint into a generation prompt |
 | 6. **Test Content** | Generate 2-3 sample pages for review (quality gate) |
 | 7. **Generate Content** | Batch-generate all content in parallel, write to Notion |
-| 7.5. **Generate Images** *(optional)* | Generate AI cover images for entries — or full magazine layouts with cover + inline section images — via OpenAI or kie.ai. Your API key, your spend. |
+| 7.5. **Generate Images** *(optional)* | Generate AI cover images for entries — or full magazine layouts with cover + inline section images — via OpenAI or kie.ai. Your API key, your spend. See [IMAGES-QUICKSTART.md](IMAGES-QUICKSTART.md) for the full how-to. |
 | 8. **Design Product** | Create homepage with navigation, icons, shareable link |
 | 9. **Product QA** | Scan every page for quality issues |
 | 10. **Product Expand** | Suggest complementary products to build next |
