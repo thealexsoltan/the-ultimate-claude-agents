@@ -73,12 +73,15 @@ if [ "$LOCAL_HEAD" = "$REMOTE_HEAD" ]; then
 else
   ALREADY_LATEST=0
   echo -e "${BLUE}[..]${NC} Pulling new commits..."
-  if ! git pull --ff-only --quiet 2>/dev/null; then
-    # Fast-forward failed — probably a divergence (rare)
-    echo -e "${RED}[err]${NC} Could not fast-forward — your local history has diverged from upstream."
-    echo "       This usually means you committed changes locally that aren't on GitHub."
-    echo "       Contact support or run manually: git pull --rebase"
+  if ! PULL_OUTPUT=$(git pull --ff-only 2>&1); then
+    echo -e "${RED}[err]${NC} Could not pull cleanly. Underlying reason:"
+    echo "$PULL_OUTPUT" | sed 's/^/       /'
+    echo ""
+    echo "       Common causes:"
+    echo "         - You have local commits that aren't on GitHub  →  git pull --rebase"
+    echo "         - Untracked files would be overwritten          →  remove or rename them"
     if [ "$HAS_LOCAL_CHANGES" -eq 1 ]; then
+      echo ""
       echo "       Your edits are safe in: git stash list (look for '$STASH_REF')"
     fi
     exit 1
