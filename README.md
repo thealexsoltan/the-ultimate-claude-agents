@@ -32,7 +32,7 @@ Rewyse AI creates Notion-based digital products with dozens to hundreds of AI-ge
 **One command** — run this in your Claude Code project directory:
 
 ```bash
-git clone https://github.com/thealexsoltan/the-ultimate-claude-agents.git rewyse-ai && bash rewyse-ai/install.sh
+git clone https://github.com/thealexsoltan/rewyse-ai && bash rewyse-ai/install.sh
 ```
 
 No GitHub account or access token needed — just paste and run.
